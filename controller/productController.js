@@ -74,9 +74,27 @@ async function deleteProduct(res, id) {
 	}
 }
 
+async function updateProduct(req, res, id) {
+	try {
+		const { title, description, price } = await getRequestBody(req);
+		const product = {
+			title,
+			description,
+			price,
+		};
+		let updatedProduct = await Product.updateProduct(id, product);
+		console.log("From update", id);
+		res.writeHead(200, { "Content-Type": "text/html" });
+		res.end(JSON.stringify(updatedProduct));
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	getProducts,
 	getProduct,
 	createProduct,
 	deleteProduct,
+	updateProduct,
 };

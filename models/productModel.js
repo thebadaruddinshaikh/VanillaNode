@@ -44,4 +44,16 @@ function deleteProduct(id) {
 		} else reject("Product Does not exists");
 	});
 }
-module.exports = { fetchAll, fetch, create, deleteProduct };
+
+function updateProduct(id, product) {
+	return new Promise((resolve, reject) => {
+		prodList = products.filter((prod) => prod.id != id);
+		console.log(products);
+		const newProd = { id, ...product };
+		console.log(newProd);
+		prodList.push(newProd);
+		writeDataToFile("data/products.json", prodList);
+		resolve(newProd);
+	});
+}
+module.exports = { fetchAll, fetch, create, deleteProduct, updateProduct };
